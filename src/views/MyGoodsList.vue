@@ -13,6 +13,23 @@
         <td>{{ scope.row.goods_name }}</td>
         <td>{{ scope.row.goods_price }}</td>
         <td>
+          <input
+          class="tag-input form-control"
+          style="width: 100px;"
+          type="text"
+          v-if="scope.row.inputVisible"
+          v-focus
+          @blur="scope.row.inputVisible = false"
+          @keydown.enter="enterFn(scope.row)"
+          @keydown.esc="scope.row.inputValue = ''"
+          v-model="scope.row.inputValue"
+          />
+          <button
+          v-else  
+          style="display: block;" 
+          class="btn btn-primary btn-sm add-tag"
+          @click="scope.row.inputVisible = true"
+          >+Tag</button>
            <span v-for="(str, ind) in scope.row.tags" 
            :key="ind"
           class="badge bg-warning text-dark">
@@ -51,9 +68,16 @@ export default {
     removeBtn(id){
       let index = this.list.findIndex(obj=>obj.id === id)
       this.list.splice(index,1)
+    },
+    enterFn(obj){
+      if(obj.inputValue.trim().length===0){
+        alert('出入框不能为空')
+        return
+      }
+      obj.tags.push(obj.inputValue)
+      obj.inputValue=''
     }
   }
-
 }
 </script>
 

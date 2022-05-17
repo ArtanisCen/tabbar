@@ -7,6 +7,12 @@ import "bootstrap/dist/css/bootstrap.css"
 axios.defaults.baseURL = "https://www.escook.cn";
 Vue.config.productionTip = false
 
+Vue.directive("focus",{
+  inserted(el){
+    el.focus()
+  }
+})
+
 
 new Vue({
   render: h => h(App),
